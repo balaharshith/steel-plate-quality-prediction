@@ -280,3 +280,74 @@ with st.expander("Show SHAP explanation (optional)"):
                 "SHAP explanation could not be generated for this model. "
                 f"Details: {error}"
             )
+            st.divider()
+st.subheader("Process Optimization Suggestions")
+
+st.write(
+    "The following suggestions are based on the model's feature importance "
+    "and observed misclassification patterns. They are intended to support "
+    "quality monitoring and process-control decisions."
+)
+
+st.markdown("""
+### 1. Monitor high-impact process measurements
+
+The Random Forest model identified several measurements that were highly
+useful for predicting fault categories. These include:
+
+- Length_of_Conveyer
+- LogOfAreas
+- Pixels_Areas
+- Outside_X_Index
+- Sum_of_Luminosity
+- Orientation_Index
+- Minimum_of_Luminosity
+- Log_X_Index
+
+These measurements should receive regular monitoring during quality analysis
+to identify unusual or recurring patterns.
+
+### 2. Give additional inspection attention to similar fault categories
+
+The model showed frequent confusion between some fault categories,
+particularly:
+
+- Bumps and Other_Faults
+- Pastry and Other_Faults
+- K_Scatch and Other_Faults
+
+These categories can receive additional inspection when the model prediction
+has low confidence.
+
+### 3. Use prediction confidence for manual review
+
+The application displays the probability associated with each predicted fault
+category. Predictions with relatively low confidence can be flagged for
+additional manual or physical inspection instead of relying only on the
+automated prediction.
+
+### 4. Investigate recurring measurement patterns
+
+Quality teams can investigate whether repeated combinations of area,
+geometric, position, and luminosity measurements occur with particular fault
+categories. This can help identify potential process conditions associated
+with recurring defects.
+
+### 5. Combine machine learning with physical inspection
+
+The model should be used as a decision-support tool rather than the only
+quality-control mechanism. Physical inspection should remain part of the
+quality assessment, especially for uncertain or commonly confused fault
+categories.
+
+### 6. Continuously evaluate and update the model
+
+As new production and inspection data becomes available, model performance
+should be monitored and the model can be periodically retrained using recent
+data. This can help maintain reliable predictions when production conditions
+change.
+
+> **Note:** Feature importance and SHAP explanations show predictive
+> relationships. They do not prove that changing a particular measurement
+> directly causes or prevents a fault.
+""")
